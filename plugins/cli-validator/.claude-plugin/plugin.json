@@ -1,0 +1,11 @@
+{
+  "name": "cli-validator",
+  "version": "1.0.0",
+  "description": "Validates a documented CLI reference guide against a build's actual CLI manifest — classifies every command as unchanged, updated, new, deprecated, renamed, or behavior-changed.",
+  "author": {
+    "name": "Rajammal",
+    "url": "https://github.com/rajammaldeepak"
+  },
+  "license": "MIT",
+  "keywords": ["cli", "documentation", "diff", "release-validation"]
+}

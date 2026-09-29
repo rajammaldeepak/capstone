@@ -1,0 +1,20 @@
+{
+  "name": "capstone",
+  "owner": {
+    "name": "rajammaldeepak"
+  },
+  "metadata": {
+    "description": "AI Mastery capstone — CLI reference validation against a build manifest",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "cli-validator",
+      "source": "./plugins/cli-validator",
+      "description": "Validates a documented CLI reference guide against a build's actual CLI manifest — classifies every command as unchanged, updated, new, deprecated, renamed, or behavior-changed.",
+      "version": "1.0.0",
+      "category": "documentation",
+      "keywords": ["cli", "documentation", "diff", "release-validation"]
+    }
+  ]
+}

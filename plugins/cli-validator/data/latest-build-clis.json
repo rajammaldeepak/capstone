@@ -1,0 +1,30 @@
+{
+  "build": "SwitchOS v5.0",
+  "extracted_on": "2026-09-20",
+  "commands": [
+    { "command": "show system uptime", "syntax": "show system uptime", "description": "Displays elapsed time since the last system boot." },
+    { "command": "show interfaces terse", "syntax": "show interfaces terse", "description": "Displays a condensed status table of all interfaces (name, admin state, link state, speed)." },
+    { "command": "show interfaces extensive", "syntax": "show interfaces extensive [interface-name]", "description": "Displays full interface statistics including error counters and traffic rates." },
+    { "command": "show chassis hardware", "syntax": "show chassis hardware", "description": "Displays installed hardware components and serial numbers." },
+    { "command": "show vlan-configuration brief", "syntax": "show vlan-configuration brief", "description": "Displays a summary table of configured VLANs and their member interfaces." },
+    { "command": "set interfaces unit family inet address", "syntax": "set interfaces ge-0/0/0 unit 0 family inet address 10.1.1.1/24 [family inet6 address <ipv6>]", "description": "Assigns an IPv4 (and optionally IPv6) address to the specified interface." },
+    { "command": "set vlan id", "syntax": "set vlan sales id 100", "description": "Creates a VLAN and assigns it a VLAN ID. The option name changed from vlan-id to id." },
+    { "command": "set system hostname", "syntax": "set system hostname switch-01", "description": "Sets the device's hostname." },
+    { "command": "set system root-authentication plain-text-password", "syntax": "set system root-authentication plain-text-password --min-complexity=medium", "description": "Sets the root password interactively. Now requires a --min-complexity flag." },
+    { "command": "delete interfaces", "syntax": "delete interfaces ge-0/0/0", "description": "Removes the configuration for the specified interface. Now prompts for confirmation before applying, unless run with --force." },
+    { "command": "commit", "syntax": "commit", "description": "Applies the active candidate configuration." },
+    { "command": "commit confirmed", "syntax": "commit confirmed 600", "description": "Applies the configuration but automatically rolls back if not confirmed within the given time. The unit changed from minutes to seconds." },
+    { "command": "rollback", "syntax": "rollback 1", "description": "Reverts to a previous committed configuration by rollback number." },
+    { "command": "show configuration", "syntax": "show configuration", "description": "Displays the current active configuration." },
+    { "command": "show route summary detail", "syntax": "show route summary detail", "description": "Displays a detailed per-protocol breakdown of routes per routing table. Replaces the old summary-only view." },
+    { "command": "set protocols lldp-med interface all", "syntax": "set protocols lldp-med interface all", "description": "Enables LLDP-MED (Media Endpoint Discovery) on all interfaces. Replaces the plain LLDP command." },
+    { "command": "set snmp v3 usm local-engine user", "syntax": "set snmp v3 usm local-engine user admin authentication-sha", "description": "Configures an SNMPv3 user with authentication. Replaces community-string based SNMPv2 access." },
+    { "command": "show log messages", "syntax": "show log messages", "description": "Displays the system message log." },
+    { "command": "request system reboot", "syntax": "request system reboot", "description": "Reboots the device." },
+    { "command": "show system alarms", "syntax": "show system alarms", "description": "Displays active system alarms." },
+    { "command": "show poe interface", "syntax": "show poe interface ge-0/0/0", "description": "Displays Power-over-Ethernet status and power draw for the specified interface." },
+    { "command": "set security zones security-zone interfaces", "syntax": "set security zones security-zone trust interfaces ge-0/0/0", "description": "Assigns an interface to a security zone." },
+    { "command": "show system storage", "syntax": "show system storage", "description": "Displays disk and storage partition usage." },
+    { "command": "set interfaces disable", "syntax": "set interfaces ge-0/0/0 disable", "description": "Administratively disables the specified interface." }
+  ]
+}

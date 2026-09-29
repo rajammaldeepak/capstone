@@ -1,0 +1,10 @@
+{
+  "name": "cli-validator-mcp-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Local MCP server bundled with the cli-validator plugin, serving dummy build/reference-guide data.",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0"
+  }
+}
