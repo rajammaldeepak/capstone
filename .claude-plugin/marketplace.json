@@ -4,7 +4,7 @@
     "name": "rajammaldeepak"
   },
   "metadata": {
-    "description": "AI Mastery capstone — CLI reference validation against a build manifest",
+    "description": "AI Mastery capstone projects — CLI reference validation and Jira-sourced release notes",
     "version": "1.0.0"
   },
   "plugins": [
@@ -15,6 +15,14 @@
       "version": "1.0.0",
       "category": "documentation",
       "keywords": ["cli", "documentation", "diff", "release-validation"]
+    },
+    {
+      "name": "release-notes-generator",
+      "source": "./plugins/release-notes-generator",
+      "description": "Generates reader-facing release notes from Jira tickets, pulling live via the Atlassian MCP connector. Includes only completed work and separately flags what's still in progress.",
+      "version": "1.0.0",
+      "category": "documentation",
+      "keywords": ["release-notes", "jira", "documentation", "mcp"]
     }
   ]
 }

@@ -1,0 +1,11 @@
+{
+  "name": "release-notes-generator",
+  "version": "1.0.0",
+  "description": "Generates reader-facing release notes from a Jira project's completed tickets, pulled live through the Atlassian MCP connector.",
+  "author": {
+    "name": "Rajammal",
+    "url": "https://github.com/rajammaldeepak"
+  },
+  "license": "MIT",
+  "keywords": ["release-notes", "jira", "documentation"]
+}

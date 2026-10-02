@@ -13,14 +13,15 @@ You need: (1) the documented reference guide (Markdown, listing commands with sy
 
 If the `build-manifest` MCP server is connected, call its `get_reference_guide` and `get_build_manifest` tools to fetch both live rather than assuming a local file is current — this is the normal path once the plugin is installed. Only fall back to reading local files, or asking the user which files to use, if those tools aren't available.
 
-## Step 2 — Match commands across both sources
+## Step 2 — Match commands in passes, don't skip ahead
 
-Walk every command in the guide and try to find its counterpart in the build manifest:
-- Exact string match on the command → compare syntax and description for drift.
-- No exact match, but strong keyword/option overlap → likely a rename; say so with your confidence level, don't assert it silently.
-- No match at all → deprecated (removed).
+Build two checklists first: every guide command (unmatched) and every build command (unmatched). Every item on both lists must be resolved by the end — nothing gets left off silently.
 
-Anything left over in the build manifest with no guide counterpart → new.
+**Pass 1 — exact match.** Same command string on both sides → mark matched. Differing syntax/options → Updated. Identical syntax but description signals a changed default/unit/behavior → Behavior-changed. Otherwise → Unchanged.
+
+**Pass 2 — rename match, exhaustive.** For every still-unmatched guide command, check it against every still-unmatched build command for shared distinctive keywords and similar purpose (e.g. both about "vlan", both about "snmp"). Mark matches found this way as Renamed, and state your confidence rather than silently defaulting elsewhere. Check all remaining pairs before concluding none match — don't stop at the first plausible pair only to leave others unchecked.
+
+**Pass 3 — leftovers.** Still-unmatched guide commands → Deprecated. Still-unmatched build commands → New.
 
 ## Step 3 — Classify each difference
 
@@ -34,6 +35,6 @@ Use these six buckets, and don't collapse them into fewer — they call for diff
 
 ## Step 4 — Report
 
-One table per non-empty category, then a summary count, then the single highest-priority fix — favor Behavior-changed or Deprecated items for this, since they cause the most user confusion if left undocumented.
+Show **all six tables, always, in this order** (Unchanged, Updated, Behavior-changed, Renamed, Deprecated, New) — even an empty category gets its heading with a single "None in this run" row, so it's visible every category was actually checked. Then a summary count (should sum correctly against both input totals), then the single highest-priority fix — favor Behavior-changed or Deprecated items for this, since they cause the most user confusion if left undocumented.
 
 Do not edit the reference guide yourself unless asked — report the classification and let the user decide what to update.

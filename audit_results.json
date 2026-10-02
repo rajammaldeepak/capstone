@@ -1,0 +1,167 @@
+{
+  "audit_metadata": {
+    "guide_version": "v4.2",
+    "build_version": "v5.0",
+    "audit_date": "2026-09-29",
+    "total_commands_in_guide": 20,
+    "total_commands_in_build": 24
+  },
+  "summary": {
+    "unchanged": 9,
+    "updated": 4,
+    "behavior_changed": 2,
+    "renamed": 3,
+    "deprecated": 1,
+    "new": 4,
+    "highest_priority": "set snmp community is fully deprecated with SNMPv2→SNMPv3 migration required"
+  },
+  "unchanged_commands": [
+    "show system uptime",
+    "show interfaces extensive",
+    "show chassis hardware",
+    "set system hostname",
+    "commit",
+    "rollback",
+    "show configuration",
+    "show log messages",
+    "request system reboot",
+    "show system alarms"
+  ],
+  "updated_commands": [
+    {
+      "command": "show interfaces terse",
+      "change": "Description adds 'speed' to output fields",
+      "action": "Update description to include speed in output"
+    },
+    {
+      "command": "set interfaces unit family inet address",
+      "change": "Syntax now supports optional IPv6: [family inet6 address <ipv6>]",
+      "action": "Update syntax block to show IPv6 option"
+    },
+    {
+      "command": "set vlan id",
+      "change": "Option renamed: vlan-id → id",
+      "action": "Update syntax from vlan-id to id"
+    },
+    {
+      "command": "set system root-authentication plain-text-password",
+      "change": "New required --min-complexity=medium flag",
+      "action": "Add required flag to syntax, document complexity levels"
+    }
+  ],
+  "behavior_changed_commands": [
+    {
+      "command": "commit confirmed",
+      "change": "Unit changed from minutes to seconds (e.g., 10 min → 600 sec)",
+      "impact": "Scripts will break if timeout values aren't updated",
+      "action": "Add migration note: 'Now in seconds, not minutes'"
+    },
+    {
+      "command": "delete interfaces",
+      "change": "Now prompts for confirmation unless --force used",
+      "impact": "Interactive scripts may hang, automation needs --force flag",
+      "action": "Document confirmation prompt and --force flag"
+    }
+  ],
+  "renamed_commands": [
+    {
+      "old_command": "show vlan brief",
+      "new_command": "show vlan-configuration brief",
+      "confidence": "high",
+      "action": "Rename page, add redirect note"
+    },
+    {
+      "old_command": "set protocols lldp interface all",
+      "new_command": "set protocols lldp-med interface all",
+      "confidence": "high",
+      "change_notes": "Upgraded to LLDP-MED protocol",
+      "action": "Update to LLDP-MED, note protocol change"
+    },
+    {
+      "old_command": "show route summary",
+      "new_command": "show route summary detail",
+      "confidence": "high",
+      "change_notes": "'detail' now default",
+      "action": "Rename and note 'detail' now default"
+    }
+  ],
+  "deprecated_commands": [
+    {
+      "command": "set snmp community <name> authorization read-only",
+      "replacement": "set snmp v3 usm local-engine user <username> authentication-sha",
+      "reason": "SNMPv2 deprecated for security; SNMPv3 provides authentication and encryption",
+      "severity": "critical",
+      "action": "Mark deprecated, add SNMPv2→v3 migration guide"
+    }
+  ],
+  "new_commands": [
+    {
+      "command": "show poe interface",
+      "syntax": "show poe interface <interface-name>",
+      "description": "Displays Power-over-Ethernet status and power draw for the specified interface",
+      "action": "Add new reference page"
+    },
+    {
+      "command": "set security zones security-zone interfaces",
+      "syntax": "set security zones security-zone <zone-name> interfaces <interface-name>",
+      "description": "Assigns an interface to a security zone",
+      "action": "Add new reference page"
+    },
+    {
+      "command": "show system storage",
+      "syntax": "show system storage",
+      "description": "Displays disk and storage partition usage",
+      "action": "Add new reference page"
+    },
+    {
+      "command": "set interfaces disable",
+      "syntax": "set interfaces <interface-name> disable",
+      "description": "Administratively disables the specified interface",
+      "action": "Add new reference page"
+    }
+  ],
+  "documentation_tasks": [
+    {
+      "priority": 1,
+      "task": "Create SNMPv2→v3 migration guide",
+      "status": "completed",
+      "file": "MIGRATION_GUIDE.md"
+    },
+    {
+      "priority": 2,
+      "task": "Update commit confirmed documentation with unit change",
+      "status": "completed",
+      "file": "MIGRATION_GUIDE.md"
+    },
+    {
+      "priority": 3,
+      "task": "Document delete interfaces behavior change",
+      "status": "completed",
+      "file": "MIGRATION_GUIDE.md"
+    },
+    {
+      "priority": 4,
+      "task": "Add documentation for 4 new commands",
+      "status": "completed",
+      "file": "CLI_UPDATES.md"
+    },
+    {
+      "priority": 5,
+      "task": "Update documentation for renamed commands",
+      "status": "completed",
+      "file": "CLI_UPDATES.md"
+    },
+    {
+      "priority": 6,
+      "task": "Document IPv6 support in set interfaces",
+      "status": "completed",
+      "file": "CLI_UPDATES.md"
+    },
+    {
+      "priority": 7,
+      "task": "Document password complexity requirement",
+      "status": "completed",
+      "file": "CLI_UPDATES.md"
+    }
+  ]
+}
