@@ -1,9 +1,11 @@
 ---
 description: Generate reader-facing release notes from a Jira project's completed tickets
-argument-hint: <jira-project-key> (e.g. KAN)
+argument-hint: (optional) <jira-project-key> — the bundled snapshot is for KAN
 ---
 
-Using the connected Jira/Atlassian tool, search for issues in the project given in `$ARGUMENTS` using JQL: `project = <key> ORDER BY status DESC, created DESC`. Fetch full descriptions for each.
+Call the `get_jira_tickets` tool from the `jira-snapshot` MCP server to fetch the ticket data. This returns a bundled snapshot of real tickets (key, summary, status, description) — no live Jira/Atlassian connection or login is required.
+
+If `$ARGUMENTS` names a project other than the one in the snapshot, say so and use the snapshot data anyway, noting that it covers a different project than requested.
 
 ## Step 1 — Separate by status
 

@@ -9,7 +9,7 @@ When invoked, produce reader-facing release notes sourced from real ticket data 
 
 ## Step 1 — Get real ticket data
 
-If the user named a Jira project or board, use the connected Jira/Atlassian tool to search it (JQL: `project = <key> ORDER BY status DESC, created DESC`), and fetch full descriptions. If no project was named, ask which one rather than guessing.
+Call the `get_jira_tickets` tool from the `jira-snapshot` MCP server. This returns a bundled snapshot of real ticket data (key, summary, status, description) without needing a live Jira login or connector.
 
 ## Step 2 — Only report what's actually Done
 

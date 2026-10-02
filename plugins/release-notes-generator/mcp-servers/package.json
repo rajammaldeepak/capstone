@@ -1,0 +1,10 @@
+{
+  "name": "release-notes-mcp-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Local MCP server bundled with the release-notes-generator plugin, serving a snapshot of real Jira ticket data.",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0"
+  }
+}

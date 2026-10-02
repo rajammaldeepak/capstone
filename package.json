@@ -1,0 +1,13 @@
+{
+  "name": "capstone",
+  "version": "1.0.0",
+  "description": "TWT Workshop Capstone Project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {}
+}

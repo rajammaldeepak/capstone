@@ -1,0 +1,43 @@
+{
+  "project": "KAN",
+  "snapshot_taken": "2026-10-02",
+  "note": "Snapshot of real Jira tickets from rajammaltwai.atlassian.net, project KAN. Bundled locally to avoid relying on a live OAuth connection during demos.",
+  "tickets": [
+    {
+      "key": "KAN-1",
+      "summary": "TWTAI Capstone Project — Complete End-to-End System Development and Deployment",
+      "status": "To Do",
+      "description": "Epic tracking the full capstone system build and rollout across architecture, backend, frontend, testing, and deployment."
+    },
+    {
+      "key": "KAN-2",
+      "summary": "Task 1: System Architecture & Design",
+      "status": "Done",
+      "description": "Finalize system architecture: database schema, API design, service boundaries, and integration diagram. Produce a technical stack document and complete 15+ component specs. Architecture review approved."
+    },
+    {
+      "key": "KAN-3",
+      "summary": "Task 2: Backend Development & APIs",
+      "status": "Done",
+      "description": "Implement 50+ REST API endpoints, 20+ database tables, authentication and authorization, and centralized error handling and logging. API documentation completed."
+    },
+    {
+      "key": "KAN-4",
+      "summary": "Task 3: Frontend Development & UI",
+      "status": "Done",
+      "description": "Build 20+ responsive UI screens including user dashboard and admin panel. Fully responsive across mobile, tablet, and desktop. Meets WCAG 2.1 AA accessibility standards."
+    },
+    {
+      "key": "KAN-5",
+      "summary": "Task 4: Testing & Quality Assurance",
+      "status": "Done",
+      "description": "Completed 50+ unit tests, 30+ integration tests, and 20+ end-to-end tests, achieving 80%+ code coverage. Performance testing and a security assessment completed. CI/CD test automation in place."
+    },
+    {
+      "key": "KAN-6",
+      "summary": "Task 5: Documentation & Production Deployment",
+      "status": "To Do",
+      "description": "Complete 15+ documentation pages and deploy the system to production."
+    }
+  ]
+}

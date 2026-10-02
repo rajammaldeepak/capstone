@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "jira-snapshot": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/mcp-servers/jira-snapshot-server.mjs"]
+    }
+  }
+}
