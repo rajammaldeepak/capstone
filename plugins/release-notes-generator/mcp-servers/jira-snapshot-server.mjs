@@ -2,18 +2,12 @@
 /**
  * jira-snapshot-server.mjs
  *
- * A minimal MCP server that serves a locally bundled snapshot of real
- * Jira ticket data — avoiding a live OAuth connection to Atlassian's
- * cloud MCP server, which can be unreliable in some environments.
- * In a production setup, get_jira_tickets would call a live Jira API
- * instead of reading a bundled file.
+ * A minimal, dependency-free MCP server that serves a locally bundled
+ * snapshot of real Jira ticket data. Implements the MCP stdio protocol
+ * by hand (JSON-RPC 2.0, newline-delimited) using only Node's built-in
+ * modules — no npm install required, no node_modules to go missing.
  */
-import { Server } from "@modelcontextprotocol/sdk/server/index.js";
-import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import {
-  ListToolsRequestSchema,
-  CallToolRequestSchema,
-} from "@modelcontextprotocol/sdk/types.js";
+import { createInterface } from "node:readline";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -21,39 +15,89 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.join(__dirname, "..", "data");
 
-const server = new Server(
-  { name: "jira-snapshot-server", version: "1.0.0" },
-  { capabilities: { tools: {} } }
-);
-
-server.setRequestHandler(ListToolsRequestSchema, async () => ({
-  tools: [
-    {
-      name: "get_jira_tickets",
-      description:
-        "Returns a snapshot of Jira tickets for the KAN project, including key, summary, status, and description for each.",
-      inputSchema: {
-        type: "object",
-        properties: {},
-        additionalProperties: false,
-      },
+const TOOLS = [
+  {
+    name: "get_jira_tickets",
+    description:
+      "Returns a snapshot of Jira tickets for the KAN project, including key, summary, status, and description for each.",
+    inputSchema: {
+      type: "object",
+      properties: {},
+      additionalProperties: false,
     },
-  ],
-}));
+  },
+];
 
-server.setRequestHandler(CallToolRequestSchema, async (request) => {
-  const { name } = request.params;
+function send(msg) {
+  process.stdout.write(JSON.stringify(msg) + "\n");
+}
 
-  if (name === "get_jira_tickets") {
-    const text = fs.readFileSync(
-      path.join(DATA_DIR, "kan-tickets-snapshot.json"),
-      "utf8"
-    );
-    return { content: [{ type: "text", text }] };
+function handleMessage(msg) {
+  const { id, method, params } = msg;
+
+  switch (method) {
+    case "initialize":
+      send({
+        jsonrpc: "2.0",
+        id,
+        result: {
+          protocolVersion: params?.protocolVersion || "2024-11-05",
+          capabilities: { tools: {} },
+          serverInfo: { name: "jira-snapshot-server", version: "1.0.0" },
+        },
+      });
+      return;
+
+    case "notifications/initialized":
+      // Notification — no response expected.
+      return;
+
+    case "tools/list":
+      send({ jsonrpc: "2.0", id, result: { tools: TOOLS } });
+      return;
+
+    case "tools/call": {
+      const name = params?.name;
+      if (name === "get_jira_tickets") {
+        const text = fs.readFileSync(
+          path.join(DATA_DIR, "kan-tickets-snapshot.json"),
+          "utf8"
+        );
+        send({
+          jsonrpc: "2.0",
+          id,
+          result: { content: [{ type: "text", text }] },
+        });
+      } else {
+        send({
+          jsonrpc: "2.0",
+          id,
+          error: { code: -32601, message: `Unknown tool: ${name}` },
+        });
+      }
+      return;
+    }
+
+    default:
+      if (id !== undefined) {
+        send({
+          jsonrpc: "2.0",
+          id,
+          error: { code: -32601, message: `Unknown method: ${method}` },
+        });
+      }
   }
+}
 
-  throw new Error(`Unknown tool: ${name}`);
+const rl = createInterface({ input: process.stdin, terminal: false });
+rl.on("line", (line) => {
+  const trimmed = line.trim();
+  if (!trimmed) return;
+  let msg;
+  try {
+    msg = JSON.parse(trimmed);
+  } catch {
+    return;
+  }
+  handleMessage(msg);
 });
-
-const transport = new StdioServerTransport();
-await server.connect(transport);
